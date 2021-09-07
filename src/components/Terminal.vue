@@ -23,7 +23,6 @@ export default {
         return this.cmds;
       },
       set(val) {
-        console.log(val);
         this.cmds.push(val);
       },
     },

@@ -15,7 +15,6 @@ export default {
   },
   methods: {
     enter() {
-      console.log("Girdim");
       this.c_cmd = this.cmd;
     },
     tab(e) {
