@@ -1,6 +1,7 @@
 <template lang="">
   <div id="cmd" @click="$refs.cmd.focus()">
-    <span>{{c_cmd}}</span>
+    <slot></slot>
+    <span>$ {{c_cmd}}</span>
     <div id="cursor"></div>
     <input ref="cmd" v-model="cmd" type="text" @keyup.enter="enter" />
   </div>

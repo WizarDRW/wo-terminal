@@ -1,8 +1,7 @@
 <template>
-  <div id="cmd" @click="$refs.cmd.focus()">
-    <span v-for="(item, index) in c_cmd" :key="index">{{item}}</span>
-    <cursor v-model="c_cmd"></cursor>
-  </div>
+  <cursor v-model="c_cmd">
+    <span v-for="(item, index) in c_cmd" :key="index">$ {{ item }}</span>
+  </cursor>
 </template>
 <script>
 import Cursor from "./Cursor.vue";
@@ -24,7 +23,7 @@ export default {
         return this.cmds;
       },
       set(val) {
-          console.log(val)
+        console.log(val);
         this.cmds.push(val);
       },
     },
@@ -41,9 +40,9 @@ export default {
   overflow: hidden;
   text-align: left;
 }
-span{
-    display: block;
-    word-wrap: break-word;
-    white-space: pre;
+span {
+  display: block;
+  word-wrap: break-word;
+  white-space: pre;
 }
 </style>
