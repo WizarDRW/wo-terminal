@@ -3,7 +3,14 @@
     <slot></slot>
     <span>$ {{c_cmd}}</span>
     <div :style="cursor"> </div>
-    <input ref="cmd" v-model="cmd" type="text" @keyup.enter="enter" @keydown.tab="tab" @blur="inputBlur" />
+    <br />
+    <input 
+      ref="cmd" 
+      v-model="cmd" 
+      type="text" 
+      @keyup.enter="enter" 
+      @keydown.tab="tab" 
+      @blur="inputBlur" />
   </div>
 </template>
 <script>
@@ -32,12 +39,14 @@ export default {
         height: "14px",
         background: this.cursorColor,
       },
-      interval: {}
+      interval: {},
     };
   },
   methods: {
     enter() {
       this.c_cmd = this.cmd;
+      var objDiv = document.getElementById("cmd");
+      objDiv.scrollTop = objDiv.scrollHeight;
     },
     tab(e) {
       var TABKEY = 9;
@@ -51,11 +60,12 @@ export default {
     },
     inputFocus() {
       this.$refs.cmd.focus();
+      this.cursor.display = "block";
       this.cursorIntervalFunction();
     },
     inputBlur() {
       clearInterval(this.interval);
-      this.cursor.display = "none"
+      this.cursor.display = "none";
     },
     cursorIntervalFunction() {
       this.interval = setInterval(() => {
@@ -78,6 +88,17 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+#cmd {
+  font-family: courier;
+  font-size: 14px;
+  background: black;
+  color: #21f838;
+  padding: 5px;
+  overflow: auto;
+  text-align: left;
+  height: 500px;
+  overflow: scroll;
+}
 span {
   float: left;
   padding-left: 3px;

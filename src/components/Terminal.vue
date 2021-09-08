@@ -1,5 +1,6 @@
 <template>
   <cursor v-model="c_cmd">
+    <h1>{{ title }}</h1>
     <span v-for="(item, index) in c_cmd" :key="index">$ {{ item }}</span>
   </cursor>
 </template>
@@ -9,7 +10,12 @@ export default {
   components: {
     Cursor,
   },
-  props: {},
+  props: {
+    title: {
+      type: String,
+      default: "WO",
+    },
+  },
   data() {
     return {
       cmd: null,
@@ -30,18 +36,15 @@ export default {
 };
 </script>
 <style scoped>
-#cmd {
-  font-family: courier;
-  font-size: 14px;
-  background: black;
-  color: #21f838;
-  padding: 5px;
-  overflow: hidden;
-  text-align: left;
-}
 span {
   display: block;
   word-wrap: break-word;
   white-space: pre;
+}
+h1 {
+  font-family: "Press Start 2P";
+  white-space: pre;
+  font-size: 100px;
+  text-align: center;
 }
 </style>
