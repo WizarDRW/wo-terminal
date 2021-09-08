@@ -1,16 +1,38 @@
 <template lang="">
-  <div id="cmd" @click="$refs.cmd.focus()">
+  <div id="cmd" @click="inputFocus()">
     <slot></slot>
     <span>$ {{c_cmd}}</span>
-    <div id="cursor"></div>
-    <input ref="cmd" v-model="cmd" type="text" @keyup.enter="enter" />
+    <div :style="cursor"> </div>
+    <input ref="cmd" v-model="cmd" type="text" @keyup.enter="enter" @keydown.tab="tab" @blur="inputBlur" />
   </div>
 </template>
 <script>
 export default {
+  props: {
+    cursorColor: {
+      type: String,
+      default: "#21f838",
+    },
+    cursorInterval: {
+      type: Number,
+      default: 1000,
+    },
+    cursorWidth: {
+      type: String,
+      default: "5px",
+    },
+  },
   data() {
     return {
-      cmd: null,
+      cmd: "",
+      cursor: {
+        display: "none",
+        float: "left",
+        width: "5px",
+        height: "14px",
+        background: this.cursorColor,
+      },
+      interval: {}
     };
   },
   methods: {
@@ -27,6 +49,20 @@ export default {
         return false;
       }
     },
+    inputFocus() {
+      this.$refs.cmd.focus();
+      this.cursorIntervalFunction();
+    },
+    inputBlur() {
+      clearInterval(this.interval);
+      this.cursor.display = "none"
+    },
+    cursorIntervalFunction() {
+      this.interval = setInterval(() => {
+        if (this.cursor.display == "block") this.cursor.display = "none";
+        else this.cursor.display = "block";
+      }, this.cursorInterval);
+    },
   },
   computed: {
     c_cmd: {
@@ -41,17 +77,11 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 span {
   float: left;
   padding-left: 3px;
   white-space: pre;
-}
-#cursor {
-  float: left;
-  width: 5px;
-  height: 14px;
-  background: #21f838;
 }
 input {
   width: 0;
