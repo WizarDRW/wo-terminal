@@ -1,9 +1,7 @@
 <template lang="">
   <div id="cmd" @click="inputFocus()">
     <slot></slot>
-    <span>$ {{c_cmd}}</span>
-    <div :style="cursor"> </div>
-    <br />
+    <span>$ 
     <input 
       ref="cmd" 
       v-model="cmd" 
@@ -12,7 +10,10 @@
       @keydown.tab="tab"
       @keydown.up="up"
       @keydown.down="down"
+      @keydown.left="left"
+      @keydown.right="right"
       @blur="inputBlur" />
+      </span>
   </div>
 </template>
 <script>
@@ -37,13 +38,6 @@ export default {
       history: [],
       historyIndex: 1,
       historyCache: "",
-      cursor: {
-        display: "none",
-        float: "left",
-        width: "5px",
-        height: "14px",
-        background: this.cursorColor,
-      },
       interval: {},
     };
   },
@@ -75,10 +69,10 @@ export default {
       }
     },
     down() {
+      this.historyIndex--;
       if (this.historyIndex > 0) {
         this.cmd = this.history[this.history.length - this.historyIndex];
       }
-      this.historyIndex--;
       if (this.historyIndex <= 0) {
         this.cmd = this.historyCache;
         this.historyIndex = 1;
@@ -92,12 +86,6 @@ export default {
     inputBlur() {
       clearInterval(this.interval);
       this.cursor.display = "none";
-    },
-    cursorIntervalFunction() {
-      this.interval = setInterval(() => {
-        if (this.cursor.display == "block") this.cursor.display = "none";
-        else this.cursor.display = "block";
-      }, this.cursorInterval);
     },
   },
   computed: {
@@ -121,7 +109,6 @@ export default {
   background: black;
   color: #21f838;
   padding: 5px;
-  overflow: auto;
   text-align: left;
   height: 500px;
   overflow: scroll;
@@ -129,10 +116,22 @@ export default {
 span {
   float: left;
   white-space: pre;
+  width: 100%;
 }
 input {
-  width: 0;
-  height: 0;
-  opacity: 0;
+  width: 98%;
+  font-family: courier;
+  font-size: 14px;
+  color: #21f838;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  caret-color: #21f838;
+  white-space: pre-wrap;
+}
+input:focus {
+  border: 0;
+  outline: none;
 }
 </style>
