@@ -8,8 +8,10 @@
       ref="cmd" 
       v-model="cmd" 
       type="text" 
-      @keyup.enter="enter" 
-      @keydown.tab="tab" 
+      @keyup.enter="enter"
+      @keydown.tab="tab"
+      @keydown.up="up"
+      @keydown.down="down"
       @blur="inputBlur" />
   </div>
 </template>
@@ -32,6 +34,9 @@ export default {
   data() {
     return {
       cmd: "",
+      history: [],
+      historyIndex: 1,
+      historyCache: "",
       cursor: {
         display: "none",
         float: "left",
@@ -45,6 +50,8 @@ export default {
   methods: {
     enter() {
       this.c_cmd = this.cmd;
+      this.historyIndex = 1;
+      this.historyCache = "";
       var objDiv = document.getElementById("cmd");
       objDiv.scrollTop = objDiv.scrollHeight;
     },
@@ -56,6 +63,25 @@ export default {
           e.preventDefault();
         }
         return false;
+      }
+    },
+    up() {
+      if (this.historyIndex == 1) {
+        this.historyCache = this.cmd;
+      }
+      if (this.historyIndex <= this.history.length) {
+        this.cmd = this.history[this.history.length - this.historyIndex];
+        this.historyIndex++;
+      }
+    },
+    down() {
+      if (this.historyIndex > 0) {
+        this.cmd = this.history[this.history.length - this.historyIndex];
+      }
+      this.historyIndex--;
+      if (this.historyIndex <= 0) {
+        this.cmd = this.historyCache;
+        this.historyIndex = 1;
       }
     },
     inputFocus() {
@@ -81,6 +107,7 @@ export default {
       },
       set(val) {
         this.$emit("update:modelValue", val);
+        this.history.push(val);
         this.cmd = null;
       },
     },
@@ -101,7 +128,6 @@ export default {
 }
 span {
   float: left;
-  padding-left: 3px;
   white-space: pre;
 }
 input {
