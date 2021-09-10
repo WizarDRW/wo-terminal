@@ -10,14 +10,14 @@
       @keydown.tab="tab"
       @keydown.up="up"
       @keydown.down="down"
-      @keydown.left="left"
-      @keydown.right="right"
       @blur="inputBlur" />
       </span>
   </div>
 </template>
 <script>
+import history from "../mixins/history";
 export default {
+  mixins: [history],
   props: {
     cursorColor: {
       type: String,
@@ -35,15 +35,12 @@ export default {
   data() {
     return {
       cmd: "",
-      history: [],
-      historyIndex: 1,
-      historyCache: "",
-      interval: {},
     };
   },
   methods: {
     enter() {
-      this.c_cmd = this.cmd;
+      this.comp_history = this.cmd;
+      this.cmd = null;
       this.historyIndex = 1;
       this.historyCache = "";
       var objDiv = document.getElementById("cmd");
@@ -52,39 +49,18 @@ export default {
     tab(e) {
       var TABKEY = 9;
       if (e.keyCode == TABKEY) {
-        this.cmd += "&emsp;";
+        this.cmd += "     ";
         if (e.preventDefault) {
           e.preventDefault();
         }
         return false;
       }
     },
-    up() {
-      if (this.historyIndex == 1) {
-        this.historyCache = this.cmd;
-      }
-      if (this.historyIndex <= this.history.length) {
-        this.cmd = this.history[this.history.length - this.historyIndex];
-        this.historyIndex++;
-      }
-    },
-    down() {
-      this.historyIndex--;
-      if (this.historyIndex > 0) {
-        this.cmd = this.history[this.history.length - this.historyIndex];
-      }
-      if (this.historyIndex <= 0) {
-        this.cmd = this.historyCache;
-        this.historyIndex = 1;
-      }
-    },
     inputFocus() {
       this.$refs.cmd.focus();
       this.cursor.display = "block";
-      this.cursorIntervalFunction();
     },
     inputBlur() {
-      clearInterval(this.interval);
       this.cursor.display = "none";
     },
   },
@@ -94,8 +70,6 @@ export default {
         return this.cmd;
       },
       set(val) {
-        this.$emit("update:modelValue", val);
-        this.history.push(val);
         this.cmd = null;
       },
     },

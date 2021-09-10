@@ -4,7 +4,8 @@ export default {
             loader: false,
             loaderStartWall: '[',
             loaderEndWall: ']',
-            loaderChar: '#'
+            loaderChar: '#',
+            loaderWidth: '100'
         }
     },
 }

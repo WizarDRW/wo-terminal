@@ -6,7 +6,9 @@
 </template>
 <script>
 import Cursor from "./Cursor.vue";
+import history from '../mixins/history'
 export default {
+  mixins: [history],
   components: {
     Cursor,
   },
@@ -18,7 +20,6 @@ export default {
   },
   data() {
     return {
-      cmd: null,
       cmds: [],
     };
   },
