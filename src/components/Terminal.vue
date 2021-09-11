@@ -38,7 +38,7 @@ export default {
 </script>
 <style scoped>
 span {
-  display: block;
+  display: flex;
   word-wrap: break-word;
   white-space: pre;
 }

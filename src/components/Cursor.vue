@@ -1,7 +1,7 @@
 <template lang="">
   <div id="cmd" @click="inputFocus()">
     <slot></slot>
-    <span>$ 
+    <span>$ <span v-for="(item, index) in splitCmd" :key="index"><span v-html="item"></span></span></span>
     <input 
       ref="cmd" 
       v-model="cmd" 
@@ -10,28 +10,18 @@
       @keydown.tab="tab"
       @keydown.up="up"
       @keydown.down="down"
-      @blur="inputBlur" />
-      </span>
+      @blur="inputBlur"
+      @keydown="append"
+      @keydown.backspace="backspace"
+      @keydown.left="left"
+      @keydown.right="right" />
   </div>
 </template>
 <script>
 import history from "../mixins/history";
+import caret from "../utils/caret";
 export default {
-  mixins: [history],
-  props: {
-    cursorColor: {
-      type: String,
-      default: "#21f838",
-    },
-    cursorInterval: {
-      type: Number,
-      default: 1000,
-    },
-    cursorWidth: {
-      type: String,
-      default: "5px",
-    },
-  },
+  mixins: [history, caret],
   data() {
     return {
       cmd: "",
@@ -62,7 +52,7 @@ export default {
     },
     inputBlur() {
       this.cursor.display = "none";
-    },
+    }
   },
   computed: {
     c_cmd: {
@@ -90,10 +80,9 @@ export default {
 span {
   float: left;
   white-space: pre;
-  width: 100%;
+  display: flex;
 }
 input {
-  width: 98%;
   font-family: courier;
   font-size: 14px;
   color: #21f838;
@@ -103,6 +92,8 @@ input {
   border: 0;
   caret-color: #21f838;
   white-space: pre-wrap;
+  width: 0;
+  height: 0;
 }
 input:focus {
   border: 0;
