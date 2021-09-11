@@ -1,11 +1,5 @@
 <template lang="">
-  <div id="cmd" @click="inputFocus()">
-    <slot></slot>
-    <span>$ <span v-for="(item, index) in splitCmd" :key="index"><span v-html="item"></span></span></span>
-    <input 
-      ref="cmd" 
-      v-model="cmd" 
-      type="text" 
+  <div id="cmd" @click="inputFocus()" 
       @keyup.enter="enter"
       @keydown.tab="tab"
       @keydown.up="up"
@@ -14,46 +8,20 @@
       @keydown="append"
       @keydown.backspace="backspace"
       @keydown.left="left"
-      @keydown.right="right" />
+      @keydown.right="right">
+    <slot></slot>
+    <span>$ <span v-for="(item, index) in splitCmd" :key="index"><span v-html="item"></span></span></span>
+    <input 
+      ref="cmd"
+      type="text"  />
   </div>
 </template>
 <script>
 import history from "../mixins/history";
-import caret from "../utils/caret";
+import caret from "../mixins/caret";
+import input from "../mixins/input";
 export default {
-  mixins: [history, caret],
-  data() {
-    return {
-      cmd: "",
-    };
-  },
-  methods: {
-    enter() {
-      this.comp_history = this.cmd;
-      this.cmd = null;
-      this.historyIndex = 1;
-      this.historyCache = "";
-      var objDiv = document.getElementById("cmd");
-      objDiv.scrollTop = objDiv.scrollHeight;
-    },
-    tab(e) {
-      var TABKEY = 9;
-      if (e.keyCode == TABKEY) {
-        this.cmd += "     ";
-        if (e.preventDefault) {
-          e.preventDefault();
-        }
-        return false;
-      }
-    },
-    inputFocus() {
-      this.$refs.cmd.focus();
-      this.cursor.display = "block";
-    },
-    inputBlur() {
-      this.cursor.display = "none";
-    }
-  },
+  mixins: [history, caret, input],
   computed: {
     c_cmd: {
       get() {

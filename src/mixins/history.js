@@ -2,29 +2,40 @@ export default {
     data() {
         return {
             history: [],
-            historyIndex: 1,
+            historyIndex: 0,
             historyCache: "",
         }
     },
     methods: {
         up() {
-            if (this.historyIndex == 1) {
-                this.historyCache = this.cmd;
-            }
-            if (this.historyIndex <= this.history.length) {
-                this.cmd = this.history[this.history.length - this.historyIndex];
+            var cached = false;
+            if (this.historyIndex == 0 && !cached) { this.historyCache = this.cmd; cached = true; }
+            if (this.history.length > this.historyIndex) {
                 this.historyIndex++;
+                this.cmd = this.history[this.history.length - this.historyIndex];
+                this.splitCmd = ['<span></span>']
+                for (let i = 0; i < this.cmd.length; i++)
+                    this.splitCmd.push(`<span>${this.cmd[i]}${this.cursorPosition && this.cursorPositionIndex == i ?
+                        "<div style='" + this.cursor + "' id='cursor'></div>" :
+                        this.cmd.length - 1 == i ?
+                            "<div style='" + this.cursor + "' id='cursor'></div>"
+                            : ""}</span>`)
             }
         },
         down() {
             this.historyIndex--;
-            if (this.historyIndex > 0) {
-                this.cmd = this.history[this.history.length - this.historyIndex];
+            if (this.historyIndex > 0) this.cmd = this.history[this.history.length - this.historyIndex];
+            if (this.historyIndex < 1) { this.cmd = this.historyCache; this.historyIndex = 0; }
+            if (this.cmd) {
+                this.splitCmd = []
+                for (let i = 0; i < this.cmd.length; i++)
+                    this.splitCmd.push(`<span>${this.cmd[i]}${this.cursorPosition && this.cursorPositionIndex == i ?
+                        "<div style='" + this.cursor + "' id='cursor'></div>" :
+                        this.cmd.length - 1 == i ?
+                            "<div style='" + this.cursor + "' id='cursor'></div>"
+                            : ""}</span>`)
             }
-            if (this.historyIndex <= 0) {
-                this.cmd = this.historyCache;
-                this.historyIndex = 1;
-            }
+            else this.splitCmd = [`<span><div style="${this.cursor}" id="cursor"></div></span>`]
         },
     },
     computed: {
