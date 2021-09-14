@@ -9,18 +9,22 @@ export default {
             default: 1000,
         },
         cursorWidth: {
-            type: String,
+            type: [String, Number],
             default: 8,
         },
         cursorPosition: {
             type: Boolean,
             default: false
+        },
+        cursorSize: {
+            type: [String, Number],
+            default: 14
         }
     },
     data() {
         return {
             splitCmd: [
-                `<span><div style="opacity: 50%;float: right;width: ${this.cursorWidth}px;height: 14px;background: ${this.cursorColor};display: inline;" id='cursor'></div></span>`
+                `<span><div style="opacity: 50%;float: right;width: ${this.cursorWidth}px;height: ${this.cursorSize}px;background: ${this.cursorColor};display: inline;" id='cursor'></div></span>`
             ],
             cursor: `opacity: 50%;float: right;width: ${this.cursorWidth}px;height: 14px;background: #21f838;display: inline;`,
             marginLeft: this.cursorWidth,
