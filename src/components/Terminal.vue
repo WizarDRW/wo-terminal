@@ -1,12 +1,22 @@
 <template>
-  <cursor v-model="c_cmd">
+  <cursor
+    v-model="c_cmd"
+    :cursorColor="cursorColor"
+    :cursorInterval="cursorInterval"
+    :cursorWidth="cursorWidth"
+    :cursorPosition="cursorPosition"
+  >
     <h1>{{ title }}</h1>
-    <span v-for="(item, index) in c_cmd" :key="index">$ {{ item }}</span>
+    <span v-for="(item, index) in c_cmd" :key="index"
+      >$ {{ item }}
+      <div>todos...</div>
+      <br />
+    </span>
   </cursor>
 </template>
 <script>
 import Cursor from "./Cursor.vue";
-import history from '../mixins/history'
+import history from "../mixins/history";
 export default {
   mixins: [history],
   components: {
@@ -16,6 +26,22 @@ export default {
     title: {
       type: String,
       default: "WO",
+    },
+    cursorColor: {
+      type: String,
+      default: "#21f838",
+    },
+    cursorInterval: {
+      type: Number,
+      default: 1000,
+    },
+    cursorWidth: {
+      type: String,
+      default: 8,
+    },
+    cursorPosition: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -38,7 +64,6 @@ export default {
 </script>
 <style scoped>
 span {
-  display: flex;
   word-wrap: break-word;
   white-space: pre;
 }
