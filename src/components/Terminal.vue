@@ -8,8 +8,8 @@
   >
     <h1>{{ title }}</h1>
     <span v-for="(item, index) in c_cmd" :key="index"
-      >$ {{ item }}
-      <div>todos...</div>
+      >$ {{ item.cmd }}
+      <div>{{ item.return }}</div>
       <br />
     </span>
   </cursor>
@@ -17,6 +17,7 @@
 <script>
 import Cursor from "./Cursor.vue";
 import history from "../mixins/history";
+import commands from "../utils/staticCommands";
 export default {
   mixins: [history],
   components: {
@@ -56,7 +57,7 @@ export default {
         return this.cmds;
       },
       set(val) {
-        this.cmds.push(val);
+        this.cmds.push({ cmd: val, return: commands[val] ?? `command not found: ${val}` });
       },
     },
   },
