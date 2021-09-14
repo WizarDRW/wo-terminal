@@ -56,7 +56,7 @@ export default {
       get() {
         return this.cmds;
       },
-      set(val) {
+      async set(val) {
         this.cmds.push({ cmd: val, return: commands[val] ?? `command not found: ${val}` });
       },
     },
