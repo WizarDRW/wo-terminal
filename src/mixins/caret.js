@@ -54,7 +54,7 @@ export default {
             }
         },
         append(e) {
-            if (e.keyCode > 64 && e.keyCode < 91) {
+            if ((e.keyCode > 64 && e.keyCode < 91) || e.keyCode == 32 || (e.keyCode > 48 && e.keyCode < 57)) {
                 let span = `<span>${e.key}<div style="${this.cursor}" id="cursor"></div></span>`;
                 for (let i = 0; i < this.splitCmd.length; i++) {
                     if (this.splitCmd[i].includes("cursor")) {
@@ -84,7 +84,6 @@ export default {
                         var str = this.cmd.split('');
                         str.splice(i-1, 1);
                         this.cmd = str.join('');
-                        console.log(this.cmd);
                         this.splitCmd[i - 1] = this.splitCmd[i - 1].slice(this.splitCmd[i - 1].lastIndexOf('<span>'), this.splitCmd[i - 1].lastIndexOf('</span>')) + `<div style="${this.cursor}" id='cursor'></div>` + this.splitCmd[i - 1].substr(this.splitCmd[i - 1].lastIndexOf('</span>'))
                         this.cursorPositionIndex = i - 1;
                         return;
