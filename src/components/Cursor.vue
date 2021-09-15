@@ -12,7 +12,7 @@
       @keydown.left="left"
       @keydown.right="right">
     <slot></slot>
-    <span>$ <span v-for="(item, index) in splitCmd" :key="index"><span v-html="item"></span></span></span>
+    <span>$ <span v-for="(item, index) in splitCmd" :key="index"><div v-html="item"></div></span></span>
   </div>
 </template>
 <script>
@@ -35,7 +35,7 @@ export default {
 </script>
 <style scoped lang="scss">
 #cmd {
-    overflow: scroll;
+  overflow: scroll;
   font-family: courier;
   font-size: 14px;
   background: black;

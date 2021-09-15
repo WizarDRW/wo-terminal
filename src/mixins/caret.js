@@ -4,7 +4,7 @@ export default {
             type: String,
             default: "#21f838",
         },
-        cursorInterval: {
+        cursorTime: {
             type: Number,
             default: 1000,
         },
@@ -27,13 +27,17 @@ export default {
     },
     data() {
         return {
-            splitCmd: [
-                `<span><div style="opacity: ${this.cursorOpacity}%;float: right;width: ${this.cursorWidth}px;height: ${this.cursorSize}px;background: ${this.cursorColor};display: inline;" id='cursor'></div></span>`
-            ],
-            cursor: `opacity: ${this.cursorOpacity}%;float: right;width: ${this.cursorWidth}px;height: ${this.cursorSize}px;background: ${this.cursorColor};display: inline;`,
-
+            display: 'inline',
+            cursor: "",
+            splitCmd: [],
             cursorPositionIndex: 0,
+            interval: {}
         }
+    },
+    created() {
+        this.cursor = `opacity: ${this.cursorOpacity}%;float: right;width: ${this.cursorWidth}px;height: ${this.cursorSize}px;background: ${this.cursorColor};display: ${this.display};`
+        this.splitCmd.push(`<span><div style="${this.cursor}" id='cursor'></div></span>`)
+        this.caretInterval()
     },
     methods: {
         left() {
@@ -104,6 +108,12 @@ export default {
         },
         caretFocus() {
             this.$refs.cmd.focus();
+        },
+        caretInterval() {
+            this.interval = setInterval(() => {
+                if (this.display == 'none') this.display = 'inline'
+                else this.display = 'none'
+            }, this.cursorTime)
         }
     },
 }
