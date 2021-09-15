@@ -35,7 +35,7 @@ export default {
         }
     },
     created() {
-        this.cursor = `opacity: ${this.cursorOpacity}%;float: right;width: ${this.cursorWidth}px;height: ${this.cursorSize}px;background: ${this.cursorColor};display: ${this.display};`
+        this.cursor = `opacity: ${this.cursorOpacity}%;float: right;width: ${this.cursorWidth}px;height: ${this.cursorSize}px;background: ${this.cursorColor};display: inline;`
         this.splitCmd.push(`<span><div style="${this.cursor}" id='cursor'></div></span>`)
         this.caretInterval()
     },
@@ -111,9 +111,22 @@ export default {
         },
         caretInterval() {
             this.interval = setInterval(() => {
-                if (this.display == 'none') this.display = 'inline'
-                else this.display = 'none'
+                if (this.display == 'none') this.display = 'inline';
+                else this.display = 'none';
+                this._display = this.display;
             }, this.cursorTime)
         }
     },
+    computed: {
+        _display: {
+            set(val) {
+                this.cursor = `opacity: ${this.cursorOpacity}%;float: right;width: ${this.cursorWidth}px;height: ${this.cursorSize}px;background: ${this.cursorColor};display: ${val};`
+                for (let i = 0; i < this.splitCmd.length; i++) {
+                    if (this.splitCmd[i].includes('cursor')) {
+                        this.splitCmd[i] = this.splitCmd[i].replace(this.splitCmd[i].slice(this.splitCmd[i].indexOf('<div'), this.splitCmd[i].lastIndexOf('</span>')), `<div style="${this.cursor}" id="cursor"></div>`)
+                    }
+                }
+            }
+        }
+    }
 }
