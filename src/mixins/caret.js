@@ -41,15 +41,18 @@ export default {
     },
     methods: {
         left() {
+            clearInterval(this.interval)
             let index = 0;
             for (let i = 0; i < this.splitCmd.length; i++) {
                 if (this.splitCmd[i - 1])
                     if (this.splitCmd[i].includes('cursor')) {
                         index = i;
                         this.splitCmd[i - 1] = this.splitCmd[i - 1].slice(this.splitCmd[i - 1].lastIndexOf('<span>'), this.splitCmd[i - 1].lastIndexOf('</span>')) + `<div style="${this.cursor}" id='cursor'></div>` + this.splitCmd[i - 1].substr(this.splitCmd[i - 1].lastIndexOf('</span>'))
-                        this.splitCmd[i] = `<span style="margin-left: -${this.cursorWidth}px">` + (this.splitCmd[i].replace(this.splitCmd[i].slice(this.splitCmd[i].indexOf('<div'), this.splitCmd[i].lastIndexOf('</span>')), '')).slice(6, 7) + '</span>'
+                        if (this.display == 'inline') this.splitCmd[i] = `<span style="margin-left: -${this.cursorWidth}px">` + (this.splitCmd[i].replace(this.splitCmd[i].slice(this.splitCmd[i].indexOf('<div'), this.splitCmd[i].lastIndexOf('</span>')), '')).slice(6, 7) + '</span>'
+                        else this.splitCmd[i] = `<span style="margin-left: 0px">` + (this.splitCmd[i].replace(this.splitCmd[i].slice(this.splitCmd[i].indexOf('<div'), this.splitCmd[i].lastIndexOf('</span>')), '')).slice(6, 7) + '</span>'
                         if (this.splitCmd[i + 1]) this.splitCmd[i + 1] = '<span>' + this.splitCmd[i + 1].slice(this.splitCmd[i + 1].indexOf('>') + 1)
                         this.cursorPositionIndex = i;
+                        this.caretInterval()
                         return;
                     }
             }
@@ -62,9 +65,12 @@ export default {
                         index = i;
                         if (this.splitCmd[i + 1].includes('margin-left')) this.splitCmd[i + 1] = '<span>' + this.splitCmd[i + 1].slice(this.splitCmd[i + 1].indexOf('>') + 1)
                         this.splitCmd[i + 1] = this.splitCmd[i + 1].slice(this.splitCmd[i + 1].lastIndexOf('<span>'), this.splitCmd[i + 1].lastIndexOf('</span>')) + `<div style="${this.cursor}" id='cursor'></div>` + this.splitCmd[i + 1].substr(this.splitCmd[i + 1].lastIndexOf('</span>'))
-                        if (this.splitCmd[i + 2]) this.splitCmd[i + 2] = `<span style="margin-left: -${this.cursorWidth}px;">` + (this.splitCmd[i + 2].replace(this.splitCmd[i + 2].slice(this.splitCmd[i + 2].indexOf('<div'), this.splitCmd[i + 2].lastIndexOf('</span>')), '')).slice(6, 7) + '</span>'
+                        if (this.splitCmd[i + 2]) 
+                            if(this.display == 'inline') this.splitCmd[i + 2] = `<span style="margin-left: -${this.cursorWidth}px;">` + (this.splitCmd[i + 2].replace(this.splitCmd[i + 2].slice(this.splitCmd[i + 2].indexOf('<div'), this.splitCmd[i + 2].lastIndexOf('</span>')), '')).slice(6, 7) + '</span>'
+                            else this.splitCmd[i + 2] = `<span style="margin-left: 0px;">` + (this.splitCmd[i + 2].replace(this.splitCmd[i + 2].slice(this.splitCmd[i + 2].indexOf('<div'), this.splitCmd[i + 2].lastIndexOf('</span>')), '')).slice(6, 7) + '</span>'
                         this.splitCmd[i] = this.splitCmd[i].replace(this.splitCmd[i].slice(this.splitCmd[i].indexOf('<div'), this.splitCmd[i].lastIndexOf('</span>')), '')
                         this.cursorPositionIndex = i;
+                        this.caretInterval()
                         return;
                     }
             }
@@ -88,6 +94,7 @@ export default {
                         let str = this.cmd.split('')
                         str.splice(this.cursorPositionIndex, 0, e.key)
                         this.cmd = str.join('')
+                        this.caretInterval()
                         return;
                     }
             }
@@ -110,6 +117,10 @@ export default {
             this.$refs.cmd.focus();
         },
         caretInterval() {
+            clearInterval(this.interval)
+            this._display = 'inline'
+            setTimeout(() => {
+            }, this.cursorTime);
             this.interval = setInterval(() => {
                 if (this.display == 'none') this.display = 'inline';
                 else this.display = 'none';
@@ -124,6 +135,10 @@ export default {
                 for (let i = 0; i < this.splitCmd.length; i++) {
                     if (this.splitCmd[i].includes('cursor')) {
                         this.splitCmd[i] = this.splitCmd[i].replace(this.splitCmd[i].slice(this.splitCmd[i].indexOf('<div'), this.splitCmd[i].lastIndexOf('</span>')), `<div style="${this.cursor}" id="cursor"></div>`)
+                        if (this.splitCmd[i + 1]) {
+                            if (val == 'none') this.splitCmd[i + 1] = this.splitCmd[i + 1].replace(`-${this.cursorWidth}`, `0`)
+                            else this.splitCmd[i + 1] = this.splitCmd[i + 1].replace('0px', '-8px')
+                        }
                     }
                 }
             }

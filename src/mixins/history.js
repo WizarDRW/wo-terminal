@@ -21,6 +21,7 @@ export default {
                             "<div style='" + this.cursor + "' id='cursor'></div>"
                             : ""}</span>`)
             }
+            this.caretInterval()
         },
         down() {
             this.historyIndex--;
@@ -36,6 +37,7 @@ export default {
                             : ""}</span>`)
             }
             else this.splitCmd = [`<span><div style="${this.cursor}" id="cursor"></div></span>`]
+            this.caretInterval()
         },
     },
     computed: {

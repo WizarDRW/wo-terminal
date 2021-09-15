@@ -15,6 +15,7 @@ export default {
             this.historyCache = "";
             var objDiv = document.getElementById("cmd");
             objDiv.scrollTop = objDiv.scrollHeight;
+            this.caretInterval()
         },
         tab(e) {
             var TABKEY = 9;
