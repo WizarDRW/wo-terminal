@@ -37,7 +37,6 @@ export default {
     created() {
         this.cursor = `opacity: ${this.cursorOpacity}%;float: right;width: ${this.cursorWidth}px;height: ${this.cursorSize}px;background: ${this.cursorColor};display: inline;`
         this.splitCmd.push(`<span><div style="${this.cursor}" id='cursor'></div></span>`)
-        this.caretInterval()
     },
     methods: {
         left() {
@@ -115,12 +114,16 @@ export default {
         },
         caretFocus() {
             this.$refs.cmd.focus();
+            this.caretInterval()
+        },
+        caretBlur() {
+            clearInterval(this.interval)
+            this._display = 'inline'
         },
         caretInterval() {
             clearInterval(this.interval)
             this._display = 'inline'
-            setTimeout(() => {
-            }, this.cursorTime);
+            setTimeout(() => {}, this.cursorTime);
             this.interval = setInterval(() => {
                 if (this.display == 'none') this.display = 'inline';
                 else this.display = 'none';

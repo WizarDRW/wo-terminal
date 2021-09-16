@@ -5,7 +5,7 @@
       @keydown.tab="tab"
       @keydown.up="up"
       @keydown.down="down"
-      @blur="inputBlur"
+      @blur="caretBlur"
       @keydown="append"
       @keydown.backspace="backspace"
       @keydown.esc="esc"

@@ -27,12 +27,5 @@ export default {
                 return false;
             }
         },
-        inputFocus() {
-            this.$refs.cmd.focus();
-            // this.cursor.display = "block";
-        },
-        inputBlur() {
-            // this.cursor.display = "none";
-        }
     }
 }
