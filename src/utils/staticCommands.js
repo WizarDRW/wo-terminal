@@ -1,3 +1,4 @@
 export default {
-    'help':'Deneme'
+    'help':``,
+    'loader': false
 }
