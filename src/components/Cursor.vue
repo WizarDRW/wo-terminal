@@ -19,8 +19,9 @@
 import history from "../mixins/history";
 import caret from "../mixins/caret";
 import input from "../mixins/input";
+import loader from "../mixins/loader";
 export default {
-  mixins: [history, caret, input],
+  mixins: [history, caret, input, loader],
   computed: {
     c_cmd: {
       get() {

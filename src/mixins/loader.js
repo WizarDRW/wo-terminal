@@ -8,4 +8,14 @@ export default {
             loaderWidth: '100'
         }
     },
+    computed: {
+        loading: {
+            get() {
+                return this.loader;
+            },
+            set(val) {
+                this.loader = val;
+            }
+        }
+    }
 }
