@@ -45,7 +45,7 @@ export default {
             get() {
                 return this.history;
             },
-            set(val) {
+            set(val) { 
                 this.history.push(val);
                 this.$emit("update:modelValue", val);
             }
