@@ -1,3 +1,4 @@
+import { Default } from "../library/default";
 export default {
     data() {
         return {
@@ -7,6 +8,8 @@ export default {
     methods: {
         enter() {
             this.comp_history = this.cmd;
+            const def = new Default();
+            def.request(this.cmd);
             this.cmd = "";
             this.splitCmd = [
                 `<span><div style="${this.cursor}" id='cursor'></div></span>`
