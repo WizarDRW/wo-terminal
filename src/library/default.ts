@@ -4,7 +4,7 @@ export class Default extends AsyncContext {
     public request(req: any): void {
         this.reqCmdAdd(req);
     }
-    public response(): any {
-        return this.resCmdGet();
+    public async response(): Promise<Object> {
+        return await this.resCmdGet();
     }
 }

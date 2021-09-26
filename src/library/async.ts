@@ -25,8 +25,6 @@ export abstract class AsyncContext {
   };
 
   protected resCmdGet = () => {
-    console.log('girdim');
-    
     if (AsyncContext.requestCommands.length > 0) {
       let lastIndex = AsyncContext.requestCommands.length - 1;
       AsyncContext.responseAnswers.push({
