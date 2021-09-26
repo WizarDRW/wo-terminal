@@ -1,23 +1,45 @@
+import StaticAnswers from "../utils/staticCommands";
+
 interface RequestCommands {
-  cmd: string
+  cmd: String;
 }
 
 interface ResponseAnswers {
-  cmd: string,
-  response: Object
+  cmd: RequestCommands;
+  response: Object;
 }
 
 export abstract class AsyncContext {
   protected static requestCommands: Array<RequestCommands> = [];
   protected static responseAnswers: Array<ResponseAnswers> = [];
-  public abstract request(req): Object;
-  public abstract response(res): Object;
+  public abstract request(req): void;
+  public abstract response(): any;
+
+  constructor() {
+    AsyncContext.requestCommands = [];
+    AsyncContext.responseAnswers = [];
+  }
 
   protected reqCmdAdd = (cmd) => {
     AsyncContext.requestCommands.push(cmd);
-    return AsyncContext.requestCommands;
-  }
-  protected cmdLoader = async(cmd) => {};
-  protected cmdSplit = async(cmd) => {};
-  protected option = async(...args) => {};
+  };
+
+  protected resCmdGet = () => {
+    console.log('girdim');
+    
+    if (AsyncContext.requestCommands.length > 0) {
+      let lastIndex = AsyncContext.requestCommands.length - 1;
+      AsyncContext.responseAnswers.push({
+        cmd: AsyncContext.requestCommands[lastIndex],
+        response:
+          StaticAnswers[AsyncContext.requestCommands[lastIndex]] ??
+          `command not found: ${AsyncContext.requestCommands[lastIndex]}`,
+      });
+      return AsyncContext.responseAnswers;
+    } else return;
+  };
+
+  protected cmdLoader = async (cmd) => {};
+  protected cmdSplit = async (cmd) => {};
+  protected option = async (...args) => {};
 }

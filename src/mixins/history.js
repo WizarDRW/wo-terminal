@@ -1,3 +1,7 @@
+import { Default } from "../library/default";
+
+const def = new Default();
+
 export default {
     data() {
         return {
@@ -45,8 +49,9 @@ export default {
             get() {
                 return this.history;
             },
-            set(val) { 
+            set(val) {
                 this.history.push(val);
+                def.request(val);
                 this.$emit("update:modelValue", val);
             }
         }

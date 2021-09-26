@@ -9,7 +9,7 @@
     <h1>{{ title }}</h1>
     <span v-for="(item, index) in c_cmd" :key="index"
       >$ {{ item.cmd }}
-      <div>{{ item.return }}</div>
+      <div>{{ item.response }}</div>
       <br />
     </span>
   </cursor>
@@ -18,6 +18,8 @@
 import Cursor from "./Cursor.vue";
 import history from "../mixins/history";
 import commands from "../utils/staticCommands";
+import { Default } from '../library/default';
+const def = new Default();
 export default {
   mixins: [history],
   components: {
@@ -54,10 +56,10 @@ export default {
   computed: {
     c_cmd: {
       get() {
-        return this.cmds;
+        return this.cmds
       },
-      async set(val) {
-        this.cmds.push({ cmd: val, return: commands[val] ?? `command not found: ${val}` });
+      set(val) {
+        this.cmds = def.response();
       },
     },
   },
