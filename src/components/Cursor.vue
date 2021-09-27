@@ -12,7 +12,7 @@
       @keydown.left="left"
       @keydown.right="right">
     <slot></slot>
-    <span>{{cmd_prefix}} <span v-for="(item, index) in splitCmd" :key="index"><div v-html="item"></div></span></span>
+    <span><span v-if="prefix_show">{{cmd_prefix}}&nbsp;</span><span v-for="(item, index) in splitCmd" :key="index"><div v-html="item"></div></span></span>
   </div>
 </template>
 <script>

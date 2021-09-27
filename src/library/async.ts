@@ -12,7 +12,7 @@ interface ResponseAnswers {
 export abstract class AsyncContext {
   protected static requestCommands: Array<RequestCommands> = [];
   protected static responseAnswers: Array<ResponseAnswers> = [];
-  public abstract request(req): void;
+  public abstract request(req): any;
   public abstract response(): any;
 
   constructor() {
@@ -20,10 +20,8 @@ export abstract class AsyncContext {
     AsyncContext.responseAnswers = [];
   }
 
-  protected reqCmdAdd = async(cmd) => {
-    setTimeout(() => {
-      AsyncContext.requestCommands.push(cmd);
-    }, 3000);
+  protected reqCmdAdd = async (cmd) => {
+    AsyncContext.requestCommands.push(cmd);
   };
 
   protected resCmdGet = async () => {

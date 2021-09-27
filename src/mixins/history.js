@@ -50,8 +50,9 @@ export default {
                 return this.history;
             },
             async set(val) {
+                this.prefix_show = false;
                 this.history.push(val);
-                await def.request(val);
+                this.prefix_show = await def.request(val);
                 await this.$emit("update:modelValue", val);
                 this.cmd = "";
                 this.splitCmd = [

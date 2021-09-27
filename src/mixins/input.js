@@ -8,6 +8,7 @@ export default {
     data() {
         return {
             cmd: "",
+            prefix_show: true
         }
     },
     methods: {
