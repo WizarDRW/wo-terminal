@@ -49,10 +49,19 @@ export default {
             get() {
                 return this.history;
             },
-            set(val) {
+            async set(val) {
                 this.history.push(val);
-                def.request(val);
-                this.$emit("update:modelValue", val);
+                await def.request(val);
+                await this.$emit("update:modelValue", val);
+                this.cmd = "";
+                this.splitCmd = [
+                    `<span><div style="${this.cursor}" id='cursor'></div></span>`
+                ];
+                this.historyIndex = 0;
+                this.historyCache = "";
+                var objDiv = document.getElementById("cmd");
+                objDiv.scrollTop = objDiv.scrollHeight;
+                this.caretInterval()
             }
         }
     }

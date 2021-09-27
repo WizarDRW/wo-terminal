@@ -1,21 +1,19 @@
 export default {
+    props: {
+        cmd_prefix: {
+            type: String,
+            default: "$"
+        }
+    },
     data() {
         return {
             cmd: "",
         }
     },
     methods: {
-        enter() {
-            this.comp_history = this.cmd;
-            this.cmd = "";
-            this.splitCmd = [
-                `<span><div style="${this.cursor}" id='cursor'></div></span>`
-            ],
-            this.historyIndex = 0;
-            this.historyCache = "";
-            var objDiv = document.getElementById("cmd");
-            objDiv.scrollTop = objDiv.scrollHeight;
-            this.caretInterval()
+        async enter() {
+            if (this.cmd.length > 0)
+                this.comp_history = this.cmd;
         },
         tab(e) {
             var TABKEY = 9;

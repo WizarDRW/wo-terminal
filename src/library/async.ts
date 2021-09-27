@@ -20,11 +20,13 @@ export abstract class AsyncContext {
     AsyncContext.responseAnswers = [];
   }
 
-  protected reqCmdAdd = (cmd) => {
-    AsyncContext.requestCommands.push(cmd);
+  protected reqCmdAdd = async(cmd) => {
+    setTimeout(() => {
+      AsyncContext.requestCommands.push(cmd);
+    }, 3000);
   };
 
-  protected resCmdGet = () => {
+  protected resCmdGet = async () => {
     if (AsyncContext.requestCommands.length > 0) {
       let lastIndex = AsyncContext.requestCommands.length - 1;
       AsyncContext.responseAnswers.push({

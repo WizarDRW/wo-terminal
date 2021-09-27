@@ -1,4 +1,4 @@
 export default {
-    'help':``,
+    'help':`help [find]`,
     'loader': false
 }

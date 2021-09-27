@@ -56,10 +56,10 @@ export default {
   computed: {
     c_cmd: {
       get() {
-        return this.cmds
+        return this.cmds;
       },
-      set(val) {
-        this.cmds = def.response();
+      async set() {
+        this.cmds = await def.response();
       },
     },
   },

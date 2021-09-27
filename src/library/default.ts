@@ -1,10 +1,14 @@
 import { AsyncContext } from "./async";
 
 export class Default extends AsyncContext {
-    public request(req: any): void {
-        this.reqCmdAdd(req);
+    public async request(req: any): Promise<void> {
+        await setTimeout(async () => {
+            
+            this.reqCmdAdd(req);
+        }, 3000);
     }
     public async response(): Promise<Object> {
-        return await this.resCmdGet();
+        let response = await this.resCmdGet();
+        return response;
     }
 }
