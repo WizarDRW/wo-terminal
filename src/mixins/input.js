@@ -13,8 +13,11 @@ export default {
     },
     methods: {
         async enter() {
-            if (this.cmd.length > 0)
+            if (this.cmd.length > 0) {
+                this.prefix_show = false;
                 this.comp_history = this.cmd;
+                this.cmd = "";
+            }
         },
         tab(e) {
             var TABKEY = 9;

@@ -50,14 +50,12 @@ export default {
                 return this.history;
             },
             async set(val) {
-                this.prefix_show = false;
                 this.history.push(val);
-                this.prefix_show = await def.request(val);
-                await this.$emit("update:modelValue", val);
-                this.cmd = "";
+                this.$emit("update:modelValue", val);
                 this.splitCmd = [
                     `<span><div style="${this.cursor}" id='cursor'></div></span>`
                 ];
+                this.prefix_show = await def.request(val);
                 this.historyIndex = 0;
                 this.historyCache = "";
                 var objDiv = document.getElementById("cmd");
