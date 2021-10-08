@@ -6,7 +6,7 @@ export class Default extends AsyncContext {
       setTimeout(() => {
         this.reqCmdAdd(req);
         resolve(true);
-      }, 2000);
+      }, 3000);
     });
   }
   public async response(): Promise<Object> {

@@ -59,11 +59,12 @@ export default {
         return this.cmds;
       },
       async set(val) {
-        let response = await def.response()
-        this.cmds.push({
+        var data = {
           cmd: val,
-          response: response[0].response
-        })
+          response: ""
+        }
+        this.cmds.push(data)
+        data.response = (await def.response())[0].response
       },
     },
   },
