@@ -65,6 +65,7 @@ export default {
         }
         this.cmds.push(data)
         data.response = (await def.response())[0].response
+        console.log(data.response);
       },
     },
   },

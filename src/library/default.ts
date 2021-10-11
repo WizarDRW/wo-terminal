@@ -3,18 +3,14 @@ import { AsyncContext } from "./async";
 export class Default extends AsyncContext {
   public async request(req: any): Promise<Boolean> {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        this.reqCmdAdd(req);
-        resolve(true);
-      }, 3000);
+      this.reqCmdAdd(req);
+      resolve(true);
     });
   }
   public async response(): Promise<Object> {
     return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            let response = this.resCmdGet();
-            resolve(response);
-        }, 3000);
+      let response = this.resCmdGet();
+      resolve(response);
     });
   }
 }
