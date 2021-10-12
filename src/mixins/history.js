@@ -51,11 +51,11 @@ export default {
             },
             async set(val) {
                 this.history.push(val);
-                this.$emit("update:modelValue", val);
                 this.splitCmd = [
                     `<span><div style="${this.cursor}" id='cursor'></div></span>`
                 ];
                 this.prefix_show = await def.request(val);
+                this.$emit("update:modelValue", val);
                 this.historyIndex = 0;
                 this.historyCache = "";
                 var objDiv = document.getElementById("cmd");
