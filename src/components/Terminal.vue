@@ -64,7 +64,8 @@ export default {
           response: ""
         }
         this.cmds.push(data)
-        data.response = (await def.response())[0].response
+        var res = await def.response()
+        data.response = res[res.length-1].response
         console.log(data.response);
       },
     },
