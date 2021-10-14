@@ -4,4 +4,4 @@
 
 ### You can customize your own terminal and connect it to a linux or dos terminal.
 
-## [Try the demo](https://packages.wizardorbit.com/vue-terminal)
+## [Try the demo](https://packages.wizardorbit.com/wo-terminal/)
