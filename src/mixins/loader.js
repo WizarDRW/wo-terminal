@@ -5,6 +5,7 @@ export default {
             loaderStartWall: '[',
             loaderEndWall: ']',
             loaderChar: '#',
+            loaderCharAppend: '>',
             loaderWidth: '100'
         }
     },
